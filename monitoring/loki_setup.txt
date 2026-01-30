@@ -1,0 +1,16 @@
+1. Start Loki using Docker:
+   Command:
+   docker run -d --name loki -p 3100:3100 grafana/loki:latest
+
+2. Verify Loki is ready:
+   Command:
+   curl http://localhost:3100/ready
+   (Output should be "ready")
+
+3. Push a test log (Manual test):
+   Command:
+   curl -v -H "Content-Type: application/json" -XPOST -s "http://localhost:3100/loki/api/v1/push" --data-raw '{"streams": [{ "stream": { "job": "test" }, "values": [ [ "'$(date +%s)000000000'", "Hello from manual log entry" ] ] }]}'
+
+4. View Logs:
+   You can view logs via Grafana (connected to port 3100) or by querying the API:
+   curl -G -s  "http://localhost:3100/loki/api/v1/query" --data-urlencode 'query={job="test"}'
