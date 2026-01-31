@@ -9,9 +9,8 @@ job "devops-intern-job" {
       driver = "docker"
 
       config {
-        image = "python:3.9-slim"
-        command = "python"
-        args = ["-c", "print('Hello form Nomad!')"]
+        image = "devops-final-app:latest"
+        image_pull_timeout = "15m"
       }
 
       resources {
